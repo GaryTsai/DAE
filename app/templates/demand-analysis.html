@@ -1,0 +1,596 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>DAE</title>
+    <!-- Fav and touch icons -->
+    <link rel="shortcut icon" href="{{ url_for('static', filename='ico/favicon.ico') }}" type="image/x-icon" />
+    <!-- Css files -->
+    <link href="{{ url_for('static', filename='css/bootstrap.min.css') }}" rel="stylesheet">
+    <link href="{{ url_for('static', filename='css/jquery.mmenu.css') }}" rel="stylesheet">
+    <link href="{{ url_for('static', filename='css/font-awesome.min.css') }}" rel="stylesheet">
+    <link href="{{ url_for('static', filename='css/climacons-font.css') }}" rel="stylesheet">
+    <link href="{{ url_for('static', filename='css/demend.css') }}" rel="stylesheet">
+    <link href="{{ url_for('static', filename='plugins/xcharts/css/xcharts.min.css') }}" rel=" stylesheet">
+    <link href="{{ url_for('static', filename='plugins/fullcalendar/css/fullcalendar.css') }}" rel="stylesheet">
+    <link href="{{ url_for('static', filename='plugins/morris/css/morris.css') }}" rel="stylesheet">
+    <link href="{{ url_for('static', filename='plugins/jquery-ui/css/jquery-ui-1.10.4.min.css') }}" rel="stylesheet">
+    <link href="{{ url_for('static', filename='plugins/jvectormap/css/jquery-jvectormap-1.2.2.css') }}" rel="stylesheet">
+    <link href="{{ url_for('static', filename='css/style.min.css') }}" rel="stylesheet">
+    <link href="{{ url_for('static', filename='css/add-ons.min.css') }}" rel="stylesheet">
+    <link href="{{ url_for('static', filename='css/jquery-ui-timepicker-addon.css') }}" rel="stylesheet">
+    <link href="{{ url_for('static', filename='css/jquery-ui.css') }}" rel="stylesheet">
+    <!--<link href="{{ url_for('static', filename='css/bootstrap-toggle.min.css') }}" rel="stylesheet">-->
+    <link href="{{ url_for('static', filename='css/spinner.css') }}" rel="stylesheet">
+
+    <!--amchart-->
+    <link href="{{ url_for('static', filename='css/amchart.css') }}" rel="stylesheet">
+    <!--amchart-->
+    <script src="{{ url_for('static', filename='js/pages/amcharts.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/pages/serial.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/pages/light.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/pages/diagram.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/moment.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/fontawesome.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/frontend.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/jquery-ui.min.js') }}"></script>
+
+    <!--<script src="{{ url_for('static', filename='js/bootstrap-toggle.min.js') }}"></script>-->
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+            <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+            <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+        <![endif]-->
+    <!--*******************************************************************************************************************************-->
+    <!--*******************************************************************************************************************************-->
+
+</head>
+
+<body onload="startTime('1')">
+    <!-- start: Header -->
+    <div class="navbar" role="navigation">
+        <div class="container-fluid">
+            <ul class="nav navbar-nav navbar-actions navbar-left">
+                <li class="visible-md visible-lg"><a href="{{ url_for('main.index') }}#" id="main-menu-toggle"><i class="fa fa-th-large"></i></a></li>
+                <li class="visible-xs visible-sm"><a href="{{ url_for('main.index') }}#" id="sidebar-menu"><i class="fa fa-navicon"></i></a></li>
+            </ul>
+            <ul class="nav navbar-nav navbar-right">
+                <li class="dropdown visible-md visible-lg">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown"><img class="user-avatar" src="{{ url_for('static', filename='img/user.png') }}" alt="user-mail">User1</a>
+                    <ul class="dropdown-menu">
+                        <li class="dropdown-menu-header">
+                            <strong>Account</strong>
+                        </li>
+                        <li><a href="page-profile.html"><i class="fa fa-user"></i> Profile</a></li>
+                        <li><a href="page-login.html"><i class="fa fa-wrench"></i> Settings</a></li>
+                        <li><a href="page-invoice.html"><i class="fa fa-usd"></i> Payments <span class="label label-default">10</span></a></li>
+                        <li><a href="gallery.html"><i class="fa fa-file"></i> File <span class="label label-primary">27</span></a></li>
+                        <li class="divider"></li>
+                        <li><a href="{{ url_for('main.index') }}"><i class="fa fa-sign-out"></i> Logout</a></li>
+                    </ul>
+                </li>
+                <li><a href="{{ url_for('main.index') }}"><i class="fa fa-power-off"></i></a></li>
+            </ul>
+        </div>
+    </div>
+    <!-- end: Header -->
+    <div class="container-fluid content">
+        <div class="row">
+            <!-- start: Main Menu -->
+            <div class="sidebar ">
+                <div class="sidebar-collapse">
+                    <div class="sidebar-header t-center">
+                        <span><img class="text-logo" src="{{ url_for('static', filename='img/dae.png') }}"></span>
+                    </div>
+                    <div class="sidebar-menu">
+                        <ul class="nav nav-sidebar">
+                            <li><a href="{{ url_for('main.index') }}"><i class="fa fa-laptop"></i><span class="text"> Dashboard</span></a></li>
+                            <li>
+                                <a href="#"><i class="fa fa-signal"></i><span class="text"> Visual Chart</span> <span class="fa fa-angle-down pull-right"></span></a>
+                                <ul class="nav sub">
+                                    <li><a href="{{ url_for ('main.chart_flot') }}"><i class="fa fa-random"></i><span class="text"> Flot Chart</span></a></li>
+                                    <li><a href="{{ url_for ('main.chart_other') }}"><i class="fa fa-bar-chart-o"></i><span class="text"> Other</span></a></li>
+                                </ul>
+                            </li>
+                            <li><a href="{{ url_for ('main.demand_analysis') }}"><i class="fa fa-bolt"></i><span class="text">Demand Analysis</span>
+                        </ul>
+                    </div>
+                </div>
+                <div class="sidebar-footer"></div>
+            </div>
+            <!-- end: Main Menu -->
+            <!-- start: Content -->
+            <div class="main ">
+                <div class="row">
+                    <div class="col-lg-12">
+                        <h3 class="page-header"><i class="fa fa-calendar"></i>DEMEND ANALYSIS</h3>
+                        <ol class="breadcrumb">
+                            <li><i class="fa fa-home"></i><a href="{{ url_for('main.index') }}">Home</a></li>
+                            <li class="pull-right"><a href="#" id="Demand_Setting"><i class="fa fa-cog" ></i>Setting</a></li>
+                            </ol>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-12">
+                        <div class="panel panel-default">
+                            <div class="panel-heading">
+                                <h2><i class="fa fa-calendar"></i><span class="break"></span><strong>需量分析</strong></h2>
+                            </div>
+                            <div class="row">
+                                <!--/.col-->
+                                <div class="col-lg-3 col-md-3 col-sm-12 col-xs-12" id="showmeter">
+                                    <div class="info-box red-bg">
+                                        <div class="count">電錶一</div>
+                                        <!--<div class="title"><span id="dev1"></span>KWH</div>--><br>
+                                        <button type="button" class="btn btn-info col-md-12" style="border-radius:10px;">
+                                            <div style="font-size: 18px ; font-family:Microsoft JhengHei;">用電資訊</div>
+                                        </button>
+                                    </div>
+                                    <!--/.info-box-->
+                                </div>
+                            </div>
+                        </div>
+                        <!--/row-->
+                    </div>
+                    <!-- end: Content -->
+                    <br>
+                    <br>
+                    <br>
+                </div>
+                <!--/container-->
+                <div class="clearfix"></div>
+                <!-- Modal-dialog-start-->
+                <div id="dialog_model" style="display:none;" title="用電資訊" role="dialog">
+
+                    <div id="demand_page">
+                        <!-- Modal content-->
+
+                        <!-- 用電資訊 title and 設定X-->
+                        <!--<h4 class="modal-title power_info"><span>用電資訊</span></h4>-->
+                        <!-- 目前時間與即時需量值 header-->
+                        <div class="modal-header">
+                            <div class="row">
+                                <font>
+                                    <h4 style="font-size: 15px; font-weight:bold; float:left ;"><span id="nowDateTimeSpan-demend"></span> <i class="fa fa-cog fa-2x" id="demandControl"
+                                            aria-hidden="true" title="設定"></i></h4>
+                                </font>
+                            </div>
+                            <div class="row">
+                                <div class=" real_power">
+                                    <h4 class="real_demandtext" id="real_demand">
+                                        即時需量值：<span id="total"></span>Watt</h4>
+                                </div>
+                            </div>
+                            <div class="dateframe">
+                                <input type="text" style="width :0; height: 0; border:none;">
+                                <input type="text" id="datetime" placeholder="請選擇年、月份、日">
+                                <input type="button" id="load" value="確定">
+                            </div>
+                        </div>
+
+
+                        <div class='col-sm-12' id="diagramframe">
+                            <nav>
+                                <ul id="myTab" class="nav nav-justified">
+                                    <li><a href="#daily_maxDemand" id="daily_Demand" data-toggle="tab" style="font-size:15px;font-family:Microsoft JhengHei; "> 該月每日最大需量</a></li>
+                                    <li><a href="#daily_maxDemand_period" id="daily_Demand_period" data-toggle="tab" style="font-size:15px;font-family:Microsoft JhengHei; "> 該日最大需量區間</a></li>
+                                    <li><a href="#Demand_high" id="three_high" data-toggle="tab" style="font-size:15px;font-family:Microsoft JhengHei; ">該月前三高需量</a></li>
+                                    <!--<li><a href="#Demand_high_Interval" id="three_high_region" data-toggle="tab" style="font-size:15px;font-family:Microsoft JhengHei; ">該月前三高需量區間</a></li>-->
+                                    <li><a href="#Demand" data-toggle="tab" id="high_demand_chart" style="font-size:15px;font-family:Microsoft JhengHei; ">該月前三高需量區間</a></li>
+                                </ul>
+                            </nav>
+
+                            <div id="myTabContent" class="tab-content">
+                                <div class="tab-pane fade" id="daily_maxDemand">
+                                </div>
+                                <div class="tab-pane fade" id="daily_maxDemand_period">
+                                </div>
+                                <div class="tab-pane fade" id="Demand_high">
+                                </div>
+                                <!--<div class="tab-pane fade" id="Demand_high_Interval">
+                                </div>-->
+                                <div class="tab-pane fade" id="Demand">
+                                    <div class='col-sm-12'>
+                                        <ul class="nav nav-pills " id="demend_info" style="padding:0 0 0 10px">
+                                            <li id="first">
+                                                <a data-toggle="pill" href="#first_graph" type="button" class="btn">第一筆</a></li>
+                                            <li id="two"><a data-toggle="pill" href="#second_graph" type="button" class="btn">第二筆</a></li>
+                                            <li id="three"><a data-toggle="pill" href="#third_graph" type="button" class="btn">第三筆</a></li>
+                                            <li>
+                                        </ul>
+                                        <div id="power_demand" class="tab-content">
+                                            <div class="tab-pane fade in active " id="first_graph">
+                                            </div>
+                                            <div class="tab-pane fade" id="second_graph">
+                                            </div>
+                                            <div class="tab-pane fade" id="third_graph">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class='col-sm-12' id="setting_page" style="display:none;">
+                        <i class="fa fa-reply fa-2x" id="returnpage" aria-hidden="true"></i>
+                        <span id="demandtext">需量控制頁面：</span>
+
+                        <div id="paramemter_frame">
+                        </div>
+                        <div id="auto_gateway">
+                            <div id="demandtext">需量控制模式：
+                                <div class="switch" id="gateway_change">
+                                    <input id="cmn-toggle-1" class="cmn-toggle cmn-toggle-round" type="checkbox">
+                                    <label for="cmn-toggle-1"></label>
+                                </div>
+                            </div>
+
+                        </div>
+                        <!--該月前三高需量-->
+                        <div class="container-fluid">
+                            <div class="tab-pane fade in active " id="high-demend">
+                                <!--最高需量長條圖-->
+                                <div class="col-md-10 sidenav"></div>
+                            </div>
+                            <!--用電記錄-->
+                            <div class="tab-pane fade" id="poewr-record"></div>
+                        </div>
+
+                    </div>
+                </div>
+                <div id="page-wrapper">
+                    <div id="demandsetting_page">
+                        <div class="row">
+                            <div class="col-lg-12">
+                                <h1 class="page-header">一般設定</h1>
+                                <i class="fa fa-cog fa-2x" id="groupdown" aria-hidden="true" title="設定"></i>
+                            </div>
+                            <!-- /.col-lg-12 -->
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-12">
+
+
+                                <form method="POST" action="#" accept-charset="UTF-8"><input name="_token" type="hidden" value="mFOA93HB2hhqDmDUzqadiDfsQSBGGmpd5WyrKyTm">
+                                    <input type="hidden" name="_token" value="mFOA93HB2hhqDmDUzqadiDfsQSBGGmpd5WyrKyTm">
+                                    <div class="row">
+                                        <div class="col-sm-12">
+                                            <div class="panel panel-default">
+
+
+                                                <div class="panel-heading">
+                                                    <h3 class="panel-title">
+
+                                                        需量值設定:
+                                                    </h3>
+
+                                                </div>
+
+                                                <div class="panel-body">
+                                                    <label class="text-muted">最大需量值設定(KW):</label>
+                                                    <input id="max" readonly="true" class="form-control" style="border:0;  font-weight:bold;" name="value" type="number" value="1000">
+                                                    <br>
+                                                    <div id="demand-max"></div>
+                                                    <br>
+                                                    <label class="text-muted">需量低限(%):</label>
+                                                    <input id="demand_bottom" readonly="true" class="form-control" style="border:0;  font-weight:bold;" name="value_min" type="number"
+                                                        value="45">
+                                                    <br><label class="text-muted">需量高限(%):</label>
+                                                    <input id="demand_top" readonly="true" class="form-control" style="border:0;  font-weight:bold;" name="value_max" type="number"
+                                                        value="70">
+                                                    <br>
+
+                                                    <div id="demand-range"></div>
+                                                    <br>
+
+                                                </div>
+                                            </div>
+                                        </div>
+
+
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="col-sm-12">
+                                            <div class="panel panel-default">
+
+
+                                                <div class="panel-heading">
+                                                    <h3 class="panel-title">
+
+                                                        卸載模式設定:
+                                                    </h3>
+
+                                                </div>
+
+                                                <div class="panel-body">
+                                                    <div class="form-group">
+                                                        <label class="text-muted">卸載模式:</label>
+                                                        <select class="form-control" name="mode"><option value="先卸一起復歸">先卸一起復歸</option><option value="先卸先復歸">先卸先復歸</option><option value="先卸後復歸">先卸後復歸</option><option value="循環先卸一起復歸">循環先卸一起復歸</option><option value="循環先卸先復歸">循環先卸先復歸</option><option value="循環先卸後復歸" selected="selected">循環先卸後復歸</option></select>
+                                                    </div>
+                                                </div>
+
+
+                                            </div>
+
+                                        </div>
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="col-sm-12">
+                                            <div class="panel panel-default">
+
+
+                                                <div class="panel-heading">
+                                                    <h3 class="panel-title">
+
+                                                        需量控制時間設定:
+                                                    </h3>
+
+                                                </div>
+
+                                                <div class="panel-body">
+                                                    <label class="text-muted">卸載間隔時間:</label>
+                                                    <input id="gap1" class="form-control" style="border:0;  font-weight:bold;" name="load_off_gap" type="number" value="4">
+                                                    <label class="text-muted">秒</label>
+                                                    <br><br>
+                                                    <label class="text-muted">復歸延遲時間:</label>
+                                                    <input id="delay" class="form-control" style="border:0;  font-weight:bold;" name="reload_delay" type="number" value="10">
+                                                    <label class="text-muted">秒</label>
+                                                    <br> <br>
+                                                    <label class="text-muted">復歸間隔時間:</label>
+                                                    <input id="gap2" class="form-control" style="border:0;  font-weight:bold;" name="reload_gap" type="number" value="5">
+                                                    <label class="text-muted">秒</label>
+                                                </div>
+
+
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-sm-12">
+                                            <div class="panel panel-default">
+
+
+                                                <div class="panel-heading">
+                                                    <h3 class="panel-title">
+
+                                                        卸載群種類設定:
+                                                    </h3>
+
+
+                                                </div>
+
+                                                <div class="panel-body">
+                                                    <div class="form-group">
+                                                        <label class="text-muted">卸載群種類:</label>
+                                                        <select class="form-control" name="group"><option value="模組常開">模組常開</option><option value="模組常關">模組常關</option><option value="不設定">不設定</option><option value="DEM電表系列" selected="selected">DEM電表系列</option></select>
+                                                    </div>
+                                                </div>
+
+
+                                            </div>
+
+                                        </div>
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="col-sm-12">
+                                            <div class="panel panel-default">
+
+
+                                                <div class="panel-heading">
+                                                    <h3 class="panel-title">
+
+                                                        需量計算週期設定:
+                                                    </h3>
+
+                                                </div>
+
+                                                <div class="panel-body">
+                                                    <div class="form-group">
+                                                        <label class="text-muted">週期(分):</label>
+                                                        <select class="form-control" name="cycle"><option value="15">15</option><option value="30" selected="selected">30</option><option value="60">60</option></select>
+                                                    </div>
+                                                </div>
+
+
+                                            </div>
+
+
+                                            <div class="row">
+                                                <div class="col-sm-12">
+                                                    <button type="test" class="btn btn-primary">更新</button>
+                                                </div>
+                                            </div>
+                                </form>
+                                </div>
+
+                                </div>
+                            </div>
+                </div>
+                        </div>
+                        <div id="groupdown_setting">
+                            <div class="row">
+                                <div class="col-lg-12">
+                                    <h1 class="page-header">卸載群組設定</h1>
+                                    <i class="fa fa-reply fa-2x" id="group_returnpage" aria-hidden="true"></i>
+                                </div>
+                                <!-- /.col-lg-12 -->
+                            </div>
+                            <div class="row">
+                                <div class="col-sm-6">
+                                    <div class="panel panel-default">
+
+
+                                        <div class="panel-heading">
+                                            <h3 class="panel-title">
+
+                                                卸載群組
+                                            </h3>
+
+                                        </div>
+
+                                        <div class="panel-body">
+                                            <h4>群組#1</h4>
+                                            <p>
+                                                <a class="btn btn-warning" href="http://140.116.39.223/offload/off/1">
+                                                    <i class="fa fa-times"></i></a>
+                                            </p>
+                                            <br>
+                                            <h4>群組#5</h4>
+                                            <p>
+                                                <a class="btn btn-warning" href="http://140.116.39.223/offload/off/5">
+                                                    <i class="fa fa-times"></i></a>
+                                            </p>
+                                            <br>
+                                            <h4>群組#6</h4>
+                                            <p>
+                                                <a class="btn btn-warning" href="http://140.116.39.223/offload/off/6">
+                                                    <i class="fa fa-times"></i></a>
+                                            </p>
+                                            <br>
+                                            <h4>群組#10</h4>
+                                            <p>
+                                                <a class="btn btn-warning" href="http://140.116.39.223/offload/off/10">
+                                                    <i class="fa fa-times"></i></a>
+                                            </p>
+                                            <br>
+                                            <h4>群組#11</h4>
+                                            <p>
+                                                <a class="btn btn-warning" href="http://140.116.39.223/offload/off/11">
+                                                    <i class="fa fa-times"></i></a>
+                                            </p>
+                                            <br>
+                                            <h4>群組#12</h4>
+                                            <p>
+                                                <a class="btn btn-warning" href="http://140.116.39.223/offload/off/12">
+                                                    <i class="fa fa-times"></i></a>
+                                            </p>
+                                            <br>
+                                        </div>
+
+
+                                    </div>
+
+                                </div>
+
+                                <div class="col-sm-6">
+                                    <div class="panel panel-default">
+
+
+                                        <div class="panel-heading">
+                                            <h3 class="panel-title">
+
+                                                非卸載群組
+                                            </h3>
+
+                                        </div>
+
+                                        <div class="panel-body">
+                                            <h4>群組#2</h4>
+                                            <p>
+                                                <a class="btn btn-info" href="http://140.116.39.223/offload/on/2">
+                                                    <i class="fa fa-check"></i></a>
+                                            </p>
+                                            <br>
+                                            <h4>群組#3</h4>
+                                            <p>
+                                                <a class="btn btn-info" href="http://140.116.39.223/offload/on/3">
+                                                    <i class="fa fa-check"></i></a>
+                                            </p>
+                                            <br>
+                                            <h4>群組#4</h4>
+                                            <p>
+                                                <a class="btn btn-info" href="http://140.116.39.223/offload/on/4">
+                                                    <i class="fa fa-check"></i></a>
+                                            </p>
+                                            <br>
+                                            <h4>群組#7</h4>
+                                            <p>
+                                                <a class="btn btn-info" href="http://140.116.39.223/offload/on/7">
+                                                    <i class="fa fa-check"></i></a>
+                                            </p>
+                                            <br>
+                                            <h4>群組#8</h4>
+                                            <p>
+                                                <a class="btn btn-info" href="http://140.116.39.223/offload/on/8">
+                                                    <i class="fa fa-check"></i></a>
+                                            </p>
+                                            <br>
+                                            <h4>群組#9</h4>
+                                            <p>
+                                                <a class="btn btn-info" href="http://140.116.39.223/offload/on/9">
+                                                    <i class="fa fa-check"></i></a>
+                                            </p>
+                                            <br>
+                                        </div>
+
+
+                                    </div>
+
+                                </div>
+
+                            </div>
+                        </div>
+
+
+
+
+                        <!--<![endif]-->
+                        <!--[if IE]>
+
+        <script type="text/javascript">
+        window.jQuery || document.write("<script src='assets/js/jquery-1.11.1.min.js'>"+"<"+"/script>");
+        </script>
+
+    <![endif]-->
+                        <script src="{{ url_for('static', filename='js/jquery-migrate-1.2.1.min.js') }}"></script>
+                        <script src="{{ url_for('static', filename='js/bootstrap.min.js') }}"></script>
+                        <!-- page scripts -->
+                        <script src="{{ url_for('static', filename='plugins/jquery-ui/js/jquery-ui-1.10.4.min.js') }}"></script>
+                        <script src="{{ url_for('static', filename='plugins/touchpunch/jquery.ui.touch-punch.min.js') }}"></script>
+                        <script src="{{ url_for('static', filename='plugins/moment/moment.min.js') }}"></script>
+                        <script src="{{ url_for('static', filename='plugins/fullcalendar/js/fullcalendar.min.js') }}"></script>
+                        <!--[if lte IE 8]>
+        <script language="javascript" type="text/javascript" src="assets/plugins/excanvas/excanvas.min.js"></script>
+    <![endif]-->
+                        <script src="{{ url_for('static', filename='plugins/flot/jquery.flot.min.js') }}"></script>
+                        <script src="{{ url_for('static', filename='plugins/flot/jquery.flot.pie.min.js') }}"></script>
+                        <script src="{{ url_for('static', filename='plugins/flot/jquery.flot.stack.min.js') }}"></script>
+                        <script src="{{ url_for('static', filename='plugins/flot/jquery.flot.resize.min.js') }}"></script>
+                        <script src="{{ url_for('static', filename='plugins/flot/jquery.flot.time.min.js') }}"></script>
+                        <script src="{{ url_for('static', filename='plugins/flot/jquery.flot.spline.min.js') }}"></script>
+                        <script src="{{ url_for('static', filename='plugins/xcharts/js/xcharts.min.js') }}"></script>
+                        <script src="{{ url_for('static', filename='plugins/autosize/jquery.autosize.min.js') }}"></script>
+                        <script src="{{ url_for('static', filename='plugins/placeholder/jquery.placeholder.min.js') }}"></script>
+                        <script src="{{ url_for('static', filename='plugins/datatables/js/jquery.dataTables.min.js') }}"></script>
+                        <script src="{{ url_for('static', filename='plugins/datatables/js/dataTables.bootstrap.min.js') }}"></script>
+                        <script src="{{ url_for('static', filename='plugins/raphael/raphael.min.js') }}"></script>
+                        <script src="{{ url_for('static', filename='plugins/morris/js/morris.min.js') }}"></script>
+                        <script src="{{ url_for('static', filename='plugins/jvectormap/js/jquery-jvectormap-1.2.2.min.js') }}"></script>
+                        <script src="{{ url_for('static', filename='plugins/jvectormap/js/jquery-jvectormap-world-mill-en.js') }}"></script>
+                        <script src="{{ url_for('static', filename='plugins/jvectormap/js/gdp-data.js') }}"></script>
+                        <script src="{{ url_for('static', filename='plugins/gauge/gauge.min.js') }}"></script>
+                        <!-- theme scripts -->
+                        <script src="{{ url_for('static', filename='js/SmoothScroll.js') }}"></script>
+                        <script src="{{ url_for('static', filename='js/jquery.mmenu.min.js') }}"></script>
+                        <script src="{{ url_for('static', filename='js/core.min.js') }}"></script>
+                        <script src="{{ url_for('static', filename='plugins/d3/d3.min.js') }}"></script>
+                        <!-- inline scripts related to this page -->
+                        <script src="{{ url_for('static', filename='js/pages/charts-flot.js') }}"></script>
+                        <script src="{{ url_for('static', filename='js/pages/demend.js') }}"></script>
+                        <script src="{{ url_for('static', filename='js/jquery-ui-timepicker-addon.js') }}"></script>
+                        <script src="{{ url_for('static', filename='js/datetimepicker.js') }}"></script>
+                        <script src="{{ url_for('static', filename='js/datepicker-zh-TW.js') }}"></script>
+                        <!--data-->
+                        <script src="{{ url_for('static', filename='js/data.js') }}"></script>
+                        <!-- highchart scripts related to this page-->
+                        <!-- end: JavaScript-->
+</body>
+
+</html>

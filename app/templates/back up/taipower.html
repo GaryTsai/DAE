@@ -1,0 +1,335 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>DAE</title>
+    <!-- Fav and touch icons -->
+    <link rel="shortcut icon" href="{{ url_for('static', filename='ico/favicon.ico') }}" type="image/x-icon" />
+    <!-- Css files -->
+    <link href="{{ url_for('static', filename='css/bootstrap.min.css') }}" rel="stylesheet">
+    <link href="{{ url_for('static', filename='css/jquery.mmenu.css') }}" rel="stylesheet">
+    <link href="{{ url_for('static', filename='css/font-awesome.min.css') }}" rel="stylesheet">
+    <link href="{{ url_for('static', filename='css/climacons-font.css') }}" rel="stylesheet">
+    <link href="{{ url_for('static', filename='plugins/xcharts/css/xcharts.min.css') }}" rel=" stylesheet">
+    <link href="{{ url_for('static', filename='plugins/fullcalendar/css/fullcalendar.css') }}" rel="stylesheet">
+    <link href="{{ url_for('static', filename='plugins/morris/css/morris.css') }}" rel="stylesheet">
+    <link href="{{ url_for('static', filename='plugins/jquery-ui/css/jquery-ui-1.10.4.min.css') }}" rel="stylesheet">
+    <link href="{{ url_for('static', filename='plugins/jvectormap/css/jquery-jvectormap-1.2.2.css') }}" rel="stylesheet">
+    <link href="{{ url_for('static', filename='css/style.min.css') }}" rel="stylesheet">
+    <link href="{{ url_for('static', filename='css/add-ons.min.css') }}" rel="stylesheet">
+    <link href="{{ url_for('static', filename='css/jquery-ui-timepicker-addon.css') }}" rel="stylesheet">
+    <link href="{{ url_for('static', filename='css/demend.css') }}" rel="stylesheet">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.0/jquery.min.js"></script>
+  
+    <!--bar-->
+    <script src="http://d3js.org/d3.v3.min.js"></script>
+
+    <script src="http://labratrevenge.com/d3-tip/javascripts/d3.tip.v0.6.3.js"></script>
+
+    <script src="{{ url_for('static', filename='js/pages/d3.js') }}"></script><!--d3.tip-->
+    <!--line-->
+  <!--   <link href="http://getbootstrap.com/dist/css/bootstrap.min.css" rel="stylesheet"> -->
+<!--     <link href="http://getbootstrap.com/examples/justified-nav/justified-nav.css" rel="stylesheet"> -->
+    
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+            <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+            <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+        <![endif]-->
+    <!--*******************************************************************************************************************************-->
+    <style>
+    .dropdown-submenu {
+        position: relative;
+    }
+    
+    .dropdown-submenu .dropdown-menu {
+        top: 0;
+        left: 100%;
+        margin-top: -1px;
+    }
+    </style>
+    <script>
+
+    $(document).ready(function() {
+        $('.dropdown-submenu a.test').on("click", function(e) {
+            $(this).next('ul').toggle();
+            e.stopPropagation();
+            e.preventDefault();
+        });
+    });
+    </script>
+    <!--*******************************************************************************************************************************-->
+</head>
+
+<body>
+    <!-- start: Header -->
+    <div class="navbar" role="navigation">
+        <div class="container-fluid">
+            <ul class="nav navbar-nav navbar-actions navbar-left">
+                <li class="visible-md visible-lg"><a href="{{ url_for('main.index') }}#" id="main-menu-toggle"><i class="fa fa-th-large"></i></a></li>
+                <li class="visible-xs visible-sm"><a href="{{ url_for('main.index') }}#" id="sidebar-menu"><i class="fa fa-navicon"></i></a></li>
+            </ul>
+            <ul class="nav navbar-nav navbar-right">
+                <li class="dropdown visible-md visible-lg">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown"><img class="user-avatar" src="{{ url_for('static', filename='img/user.png') }}" alt="user-mail">User1</a>
+                    <ul class="dropdown-menu">
+                        <li class="dropdown-menu-header">
+                            <strong>Account</strong>
+                        </li>
+                        <li><a href="page-profile.html"><i class="fa fa-user"></i> Profile</a></li>
+                        <li><a href="page-login.html"><i class="fa fa-wrench"></i> Settings</a></li>
+                        <li><a href="page-invoice.html"><i class="fa fa-usd"></i> Payments <span class="label label-default">10</span></a></li>
+                        <li><a href="gallery.html"><i class="fa fa-file"></i> File <span class="label label-primary">27</span></a></li>
+                        <li class="divider"></li>
+                        <li><a href="{{ url_for('main.index') }}"><i class="fa fa-sign-out"></i> Logout</a></li>
+                    </ul>
+                </li>
+                <li><a href="{{ url_for('main.index') }}"><i class="fa fa-power-off"></i></a></li>
+            </ul>
+        </div>
+    </div>
+    <!-- end: Header -->
+    <div class="container-fluid content">
+        <div class="row">
+            <!-- start: Main Menu -->
+            <div class="sidebar ">
+                <div class="sidebar-collapse">
+                    <div class="sidebar-header t-center">
+                        <span><img class="text-logo" src="{{ url_for('static', filename='img/dae.png') }}"></span>
+                    </div>
+                    <div class="sidebar-menu">
+                        <ul class="nav nav-sidebar">
+                            <li><a href="{{ url_for('main.index') }}"><i class="fa fa-laptop"></i><span class="text"> Dashboard</span></a></li>
+                            <li>
+                                <a href="#"><i class="fa fa-signal"></i><span class="text"> Visual Chart</span> <span class="fa fa-angle-down pull-right"></span></a>
+                                <ul class="nav sub">
+                                    <li><a href="{{ url_for ('main.chart_flot') }}"><i class="fa fa-random"></i><span class="text"> Flot Chart</span></a></li>
+                                    <li><a href="{{ url_for ('main.chart_other') }}"><i class="fa fa-bar-chart-o"></i><span class="text"> Other</span></a></li>
+                                </ul>
+                            </li>
+                            <li><a href="{{ url_for ('main.demand_analysis') }}"><i class="fa fa-bolt"></i><span class="text">Demand Analysis</span>
+                            <li><a href="{{ url_for ('main.taipower') }}"><i class="fa fa-bolt"></i><span class="text">taipower</span>
+                            </a></li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="sidebar-footer"></div>
+            </div>
+            <!-- end: Main Menu -->
+        </div>
+        <!-- start: Content -->
+        <div class="main ">
+            <div class="row">
+                <div class="col-lg-12">
+                    <h3 class="page-header"><i class="fa fa-calendar"></i>DEMEND ANALYSIS</h3>
+                    <ol class="breadcrumb">
+                        <li><i class="fa fa-home"></i><a href="{{ url_for('main.index') }}">Home</a></li>
+                        <li class="pull-right"><a href="#"><i class="fa fa-cog"></i>Setting</a></li>
+                    </ol>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-12">
+                    <div class="panel panel-default">
+                        <div class="panel-heading ">
+                            <h2><i class="fa fa-calendar"></i><span class="break"></span><strong>需量分析</strong></h2>
+                        </div>
+                        <div class="row">
+                            <div class="collapse navbar-collapse" id="navbar-collapse">
+                                <div class="dropdown">
+                                    <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">行業<span class="caret"></span></button>
+                                    <ul class="dropdown-menu">
+                                        <li class="dropdown-submenu">
+                                            <a class="test" tabindex="1" href="#">運輸倉儲及通信電影運 <span class="caret"></span></a>
+                                            <ul class="dropdown-menu">
+                                                <li><a href="#">n1</a></li>
+                                                <li><a href="#">n2</a></li>
+                                                <li><a href="#">n3</a></li>
+                                                <li><a href="#">n4</a></li>
+                                                <li><a href="#">n5</a></li>
+                                                <li><a href="#">n6</a></li>
+                                            </ul>
+                                        </li>
+                                        <li class="dropdown-submenu">
+                                            <a class="test" tabindex="2" href="#">批發零售業餐飲業 <span class="caret"></span></a>
+                                            <ul class="dropdown-menu">
+                                                <li><a href="#">n7</a></li>
+                                                <li><a href="#">n8</a></li>
+                                                <li><a href="#">n9</a></li>
+                                                <li><a href="#">n10</a></li>
+                                                <li><a href="#">n11</a></li>
+                                                <li><a href="#">n12</a></li>
+                                            </ul>
+                                        </li>
+                                        <li class="dropdown-submenu">
+                                            <a class="test" tabindex="3" href="#">金融保險及不動產業 <span class="caret"></span></a>
+                                            <ul class="dropdown-menu">
+                                                <li><a href="#">n13</a></li>
+                                                <li><a href="#">n14</a></li>
+                                                <li><a href="#">n15</a></li>
+                                                <li><a href="#">n16</a></li>
+                                                <li><a href="#">n17</a></li>
+                                                <li><a href="#">n18</a></li>
+                                            </ul>
+                                        </li>
+                                        <li class="dropdown-submenu">
+                                            <a class="test" tabindex="4" href="#">教育醫療社會及公共行政業 <span class="caret"></span></a>
+                                            <ul class="dropdown-menu">
+                                                <li><a href="#">n19</a></li>
+                                                <li><a href="#">n20</a></li>
+                                                <li><a href="#">n21</a></li>
+                                                <li><a href="#">n22</a></li>
+                                                <li><a href="#">n23</a></li>
+                                                <li><a href="#">n24</a></li>
+                                            </ul>
+                                        </li>
+                                        <li class="dropdown-submenu  ">
+                                            <a class="test" tabindex="5" href="#">工商服務業<span class="caret"></span></a>
+                                            <ul class="dropdown-menu">
+                                                <li><a href="#">n25</a></li>
+                                                <li><a href="#">n26</a></li>
+                                                <li><a href="#">n27</a></li>
+                                                <li><a href="#">n28</a></li>
+                                                <li><a href="#">n29</a></li>
+                                                <li><a href="#">n30</a></li>
+                                            </ul>
+                                        </li>
+                                        <li class="dropdown-submenu">
+                                            <a class="test" tabindex="6" href="#">電子零件組製造業<span class="caret"></span></a>
+                                            <ul class="dropdown-menu">
+                                                <li><a href="#">n31</a></li>
+                                                <li><a href="#">n32</a></li>
+                                                <li><a href="#">n33</a></li>
+                                                <li><a href="#">n34</a></li>
+                                                <li><a href="#">n35</a></li>
+                                                <li><a href="#">n36</a></li>
+                                            </ul>
+                                        </li>
+                                        <li class="dropdown-submenu">
+                                            <a class="test" tabindex="7" href="#">金屬基本製造業 <span class="caret"></span></a>
+                                            <ul class="dropdown-menu">
+                                                <li><a href="#">n37</a></li>
+                                                <li><a href="#">n38</a></li>
+                                                <li><a href="#">n39</a></li>
+                                                <li><a href="#">n40</a></li>
+                                                <li><a href="#">n41</a></li>
+                                                <li><a href="#">n42</a></li>
+                                            </ul>
+                                        </li>
+                                        <li class="dropdown-submenu">
+                                            <a class="test" tabindex="8" href="#">化學材料製造業<span class="caret"></span></a>
+                                            <ul class="dropdown-menu">
+                                                <li><a href="#">n43</a></li>
+                                                <li><a href="#">n44</a></li>
+                                                <li><a href="#">n45</a></li>
+                                                <li><a href="#">n46</a></li>
+                                                <li><a href="#">n47</a></li>
+                                                <li><a href="#">n48</a></li>
+                                            </ul>
+                                        </li>
+                                        <!--
+                                                      <li><a href="#">批發零售業餐飲業</a></li>
+                                                      <li><a href="#">金融保險及不動產</a></li>
+                                                      <li><a href="#">教育醫療社會及公共行政業</a></li>
+                                                      <li><a href="#">工商服務業</a></li>
+                                                      <li><a href="#">電子零件組製造</a></li>
+                                                      <li><a href="#">金屬基本製造業</a></li>
+                                                      <li><a href="#">化學材料製造業</a></li>
+                                                      <li><a href="#">金屬製品製造業</a></li>
+                                                      <li><a href="#">電腦電子產品及光學製品</a></li>
+                                                      <li><a href="#">非金屬礦物製品製造業</a></li>
+                                                      <li><a href="#">紡織成衣業</a></li>
+                                                      <li><a href="#">石油及煤製品製造業</a></li>
+                                                      <li><a href="#">紡織成衣業</a></li>
+                                                      <li><a href="#">造紙業</a></li>-->
+                                    </ul>
+                                </div>
+                            </div>
+                            <hr>
+                            <!-- /.navbar-collapse -->
+                            <div>
+                                <div class='container'>
+                                    <svg viewBox="0 0 800 400" id="visualisation" width="1000" height="500"></svg>
+                                    <svg viewBox="0 0 800 400" id="visualisation2" width="1000" height="500"></svg>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!--/col-sm-12-->
+        </div>
+        <!--/row-->
+    </div>
+    <!-- end: main Content -->
+    </div>
+    <!--end container-fluid content-->
+    <!--Set chart1 power demand record-->
+    <!--Set chart2 one phase demand -->
+    <!-- start: JavaScript-->
+    <!--[if !IE]>-->
+    <script src="{{ url_for('static', filename='js/jquery-2.1.1.min.js') }}"></script>
+    <!--<![endif]-->
+    <!--[if IE]>
+    
+        <script src="assets/js/jquery-1.11.1.min.js"></script>
+    
+    <![endif]-->
+    <!--[if !IE]>-->
+    <script type="text/javascript">
+    window.jQuery || document.write("<script src='{{ url_for('static', filename='js/jquery-2.1.1.min.js') }}'>" + "<" + "/script>");
+    </script>
+    <!--<![endif]-->
+    <!--[if IE]>
+    
+        <script type="text/javascript">
+        window.jQuery || document.write("<script src='assets/js/jquery-1.11.1.min.js'>"+"<"+"/script>");
+        </script>
+        
+    <![endif]-->
+    <script src="{{ url_for('static', filename='js/jquery-migrate-1.2.1.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/bootstrap.min.js') }}"></script>
+    <!-- page scripts -->
+    <script src="{{ url_for('static', filename='plugins/jquery-ui/js/jquery-ui-1.10.4.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='plugins/touchpunch/jquery.ui.touch-punch.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='plugins/moment/moment.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='plugins/fullcalendar/js/fullcalendar.min.js') }}"></script>
+    <!--[if lte IE 8]>
+        <script language="javascript" type="text/javascript" src="assets/plugins/excanvas/excanvas.min.js"></script>
+    <![endif]-->
+    <script src="{{ url_for('static', filename='plugins/flot/jquery.flot.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='plugins/flot/jquery.flot.pie.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='plugins/flot/jquery.flot.stack.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='plugins/flot/jquery.flot.resize.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='plugins/flot/jquery.flot.time.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='plugins/flot/jquery.flot.spline.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='plugins/xcharts/js/xcharts.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='plugins/autosize/jquery.autosize.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='plugins/placeholder/jquery.placeholder.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='plugins/datatables/js/jquery.dataTables.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='plugins/datatables/js/dataTables.bootstrap.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='plugins/raphael/raphael.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='plugins/morris/js/morris.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='plugins/jvectormap/js/jquery-jvectormap-1.2.2.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='plugins/jvectormap/js/jquery-jvectormap-world-mill-en.js') }}"></script>
+    <script src="{{ url_for('static', filename='plugins/jvectormap/js/gdp-data.js') }}"></script>
+    <script src="{{ url_for('static', filename='plugins/gauge/gauge.min.js') }}"></script>
+    <!-- theme scripts -->
+    <script src="{{ url_for('static', filename='js/SmoothScroll.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/jquery.mmenu.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/core.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='plugins/d3/d3.min.js') }}"></script>
+    <!-- inline scripts related to this page -->
+    <script src="{{ url_for('static', filename='js/pages/charts-flot.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/pages/data.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/jquery-ui-timepicker-addon.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/datetimepicker.js') }}"></script>
+    <!-- highchart scripts related to this page-->
+    <!-- end: JavaScript-->
+    <!-- Modal content-->
+</body>
+
+</html>
